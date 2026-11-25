@@ -1,4 +1,4 @@
-from setuptools import find_packages, setup
+from setuptools import setup
 from glob import glob
 
 package_name = 'fp_stewart_platform'
@@ -10,13 +10,15 @@ package_name = 'fp_stewart_platform'
 otherfiles = [
     ('share/' + package_name + '/launch', glob('launch/*')),
     ('share/' + package_name + '/urdf',   glob('urdf/*')),
+    ('share/' + package_name + '/meshes', glob('meshes/*.stl')),
 ]
 
 
 setup(
     name=package_name,
     version='0.0.0',
-    packages=find_packages(exclude=['test']),
+    packages=[package_name],
+    package_dir={package_name: 'src'},
     data_files=[
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
@@ -31,7 +33,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'kinematics      = fp_stewart_platform.kinematics:main', # TODO: replace placeholders
+            'trajectory = fp_stewart_platform.trajectory:main',
         ],
     },
 )
